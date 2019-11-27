@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  database:
+    image: mysql
+    volumes:
+      - /home/ahmed/workspace/meetup-microservices/product-demo/src/main/resources/sql/:/docker-entrypoint-initdb.d/
+    environment:
+      MYSQL_ROOT_PASSWORD: changeme
+    ports:
+      - 3306:3306
+    container_name: meetup-mysql
+
+  web:
+    build: .
+    ports:
+      - 8080:8080
+    links:
+      - database
+    container_name: product-demo-web-container
